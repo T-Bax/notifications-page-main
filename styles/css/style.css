@@ -77,7 +77,30 @@ li{
     
 }
 .notifications-container{
-    background-color: antiquewhite;
-    height: 500px;
+    
+    
     margin-top: 1.25em;
+    display: flex;
+    flex-direction: column;
+}
+.notification{
+    
+    display: flex;
+    font-size: smaller;
+    background-color: var(--clr-neutral-very-light-grayish-blue);
+    border-radius: 10px;
+
+}
+.left-section{
+    padding: 1em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    
+}
+.right-section{
+    padding-right: 1em;
+}
+img{
+    max-width: 100%;
 }
