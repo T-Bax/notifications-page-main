@@ -25,4 +25,59 @@
 html{
     font-size: var(--fs-base);
     font-family: var(--ff-primary);
+    background-color: var(--clr-neutral-very-dark-blue);
+/* center body */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+body{
+    box-sizing: border-box;
+    height: 600px;
+    width: 375px;
+    background-color: var(--clr-neutral-white);
+    padding: 1.5em 1em;
+
+    
+}
+
+.notification-header{
+    color: var(--clr-neutral-very-dark-blue);
+    margin: 0px;
+    font-size: larger;
+}
+.unread-msg-counter{
+    background-color: var(--clr-primary-blue);
+    color: var(--clr-neutral-white);
+    min-width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+li{
+    list-style: none;
+    display: flex;
+}
+
+.mark-as-read{
+    
+}
+.notifications-container{
+    background-color: antiquewhite;
+    height: 500px;
+    margin-top: 1.25em;
 }
