@@ -60,10 +60,11 @@ class Notification {
     constructor(user, timestamp){
         this.user = user;
         this.read = false;
-        this.timestamp = timestamp;
+        this.timestamp = ;
         this.id = Notification.idIncrementor
         Notification.idIncrementor++;
         this.createHTML();
+        this.elapsedTimeSpan.innerText = "1m"
     }
     static idIncrementor = 0;
     
@@ -71,6 +72,7 @@ class Notification {
     textSpan;
     subjectSpan;
     dotSpan;
+    elapsedTimeSpan;
     createHTML(){
         const container = document.createElement("div");
         const left = document.createElement("div");
@@ -81,6 +83,8 @@ class Notification {
         const subjectSpan = document.createElement("span");
         const dotSpan = document.createElement("span");
         const img = document.createElement("img");
+        const br = document.createElement("br");
+        const time = document.createElement("span");
         container.classList.add("notification");
         left.classList.add("left-section");
         right.classList.add("right-section");
@@ -96,12 +100,17 @@ class Notification {
         p.appendChild(textSpan);
         p.appendChild(subjectSpan);
         p.appendChild(dotSpan);
+        p.appendChild(br);
+        p.appendChild(time);
+    
 
         container.setAttribute("id", "notification_" + this.id)
         img.setAttribute("src", "./assets/images/" + this.user.avatar)
         userSpan.innerText = `${this.user.firstName} ${this.user.lastName}`;
         dotSpan.innerText = " •";
         
+        
+        this.elapsedTimeSpan = time;
         this.textSpan = textSpan;
         this.notificationContainer = container;
         this.subjectSpan = subjectSpan;
@@ -137,6 +146,7 @@ class Join extends Notification {
         this.grpName = grpName;
         this.text = " has joined your group";
         this.textSpan.innerText = this.text;
+        this.subjectSpan.innerText = ` ${this.groupName}`;
     }
     
 }
@@ -165,6 +175,7 @@ class Leave extends Notification {
         this.groupName = groupName;
         this.text = " left the group";
         this.textSpan.innerText = this.text;
+        this.subjectSpan.innerText = ` ${this.groupName}`;
     }
     
 }
