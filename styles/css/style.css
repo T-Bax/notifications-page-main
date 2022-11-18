@@ -82,6 +82,7 @@ li{
     margin-top: 1.25em;
     display: flex;
     flex-direction: column;
+    gap: .5em;
 }
 .notification{
     
@@ -92,6 +93,7 @@ li{
 
 }
 .left-section{
+    width: 60px;
     padding: 1em;
     display: flex;
     align-items: flex-start;
@@ -103,4 +105,22 @@ li{
 }
 img{
     max-width: 100%;
+}
+.user{
+    font-weight: 700;
+}
+.text{
+    color: var(--clr-neutral-dark-grayish-blue);
+}
+.subject{
+    color: var(--clr-neutral-dark-grayish-blue);
+    font-weight: bold;
+}
+.timestamp{
+    color: var(--clr-neutral-grayish-blue);
+}
+.dot{
+    color: var(--clr-primary-red);
+    font-weight: bold;
+    font-size: 1.25em;
 }
