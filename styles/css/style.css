@@ -23,6 +23,7 @@
 }
 
 html{
+    
     font-size: var(--fs-base);
     font-family: var(--ff-primary);
     background-color: var(--clr-neutral-very-dark-blue);
@@ -36,7 +37,7 @@ html{
 
 body{
     box-sizing: border-box;
-    height: 600px;
+    margin: 0;
     width: 375px;
     background-color: var(--clr-neutral-white);
     padding: 1.5em 1em;
@@ -73,9 +74,10 @@ li{
     display: flex;
 }
 
-.mark-as-read{
-    
+.mark-as-read:hover{
+    cursor: pointer;
 }
+
 .notifications-container{
     
     
@@ -92,19 +94,24 @@ li{
     border-radius: 10px;
 
 }
+.notification:hover{
+    cursor: pointer;
+}
 .left-section{
-    width: 60px;
-    padding: 1em;
+    width: 20%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     
 }
 .right-section{
+    width: 80%;
     padding-right: 1em;
 }
 img{
-    max-width: 100%;
+    width: 2.5em;
+    height: 2.5em;
+    
 }
 .user{
     font-weight: 700;
@@ -123,4 +130,10 @@ img{
     color: var(--clr-primary-red);
     font-weight: bold;
     font-size: 1.25em;
+}
+.hidden{
+    display: none;
+}
+.read{
+    background-color: var(--clr-neutral-white);
 }

@@ -1,4 +1,5 @@
 
+//Function to get a random date - used for dummy data
 const getRandomDate = () => {
     const max = Date.now()
     const min = max - 31556926000
@@ -7,7 +8,7 @@ const getRandomDate = () => {
 }
 
 
-
+//START Dummy User Data
 const users = [
     {
         id: 0,
@@ -54,25 +55,115 @@ const users = [
 
 
 ]
+//END Dummy User Data
 
 
+//Class to work with Epoch time conversions and calculations
+class Epoch{
+    static epochToMinutes = (epoch) => {
+        const mins = Math.floor(epoch/60000);
+        return `${mins}m`;
+    }
+    static epochToMonths = (epoch) => {
+        const mths = Math.floor(epoch/2629743000);
+        const returnText = mths > 1 ? `${mths} months` : `${mths} month`
+        return returnText;
+    }
+    static epochToHours = (epoch) => {
+        const hrs = Math.floor(epoch/3600000);
+        const returnText = hrs > 1 ? `${hrs} hours` : `${hrs} hour`
+        return returnText;
+    }
+    static epochToDays = (epoch) => {
+        const days = Math.floor(epoch/86400000);
+        const returnText = days > 1 ? `${days} days` : `${days} day`
+        return returnText;
+    }
+    static epochToWeeks = (epoch) => {
+        const wks = Math.floor(epoch/604800000);
+        const returnText = wks > 1 ? `${wks} weeks` : `${wks} week`
+        return returnText;
+    }
+    static epochToYears = (epoch) => {
+        const yrs = Math.floor(epoch/31556926000);
+        const returnText = yrs > 1 ? `${yrs} years` : `${yrs} year`
+        return returnText;
+    }
+    static convertFromEpoch = (epoch) => {
+        switch(true){
+            case epoch > 31556926000: 
+                return this.epochToYears(epoch)
+            case epoch > 2629743000: 
+                return this.epochToMonths(epoch)
+            case epoch > 604800000: 
+                return this.epochToWeeks(epoch)
+            case epoch > 86400000: 
+                return this.epochToDays(epoch)
+            case epoch > 3600000: 
+                return this.epochToHours(epoch)
+            default: 
+                return this.epochToMinutes(epoch)   
+        }
+    }
+
+
+    static getTimeElapsed(date){
+        const a = date.getTime();
+        const b = Date.now();
+
+        const c = b - a;
+        
+        const value = this.convertFromEpoch(c);
+
+        return value;
+    }
+}
+
+//START Notification classes
 class Notification {
     constructor(user, timestamp){
         this.user = user;
         this.read = false;
-        this.timestamp = ;
+        this.timestamp = timestamp;
         this.id = Notification.idIncrementor
         Notification.idIncrementor++;
         this.createHTML();
-        this.elapsedTimeSpan.innerText = "1m"
+        this.elapsedTimeSpan.innerText = `${Epoch.getTimeElapsed(timestamp)} ago`
+        if(this.read === false)
+            Notification.unreadMsgsCounter++;
+        
     }
     static idIncrementor = 0;
-    
+    static unreadMsgsCounter = 0;
     notificationContainer;
     textSpan;
     subjectSpan;
     dotSpan;
     elapsedTimeSpan;
+
+
+    markAsRead(){
+        if(this.read === false){
+            this.read = true;
+            this.dotSpan.classList.toggle("hidden");
+            this.notificationContainer.classList.toggle("read");
+            Notification.unreadMsgsCounter--
+            updateMsgCounter();
+
+        }
+        
+    };
+
+    notificationClicked(){
+        if(this.read === false){
+            this.markAsRead();
+        }
+
+    };
+
+
+
+
     createHTML(){
         const container = document.createElement("div");
         const left = document.createElement("div");
@@ -119,7 +210,6 @@ class Notification {
 
     }
 }
-
 class Follow extends Notification {
     constructor(user, timestamp){
         super(user, timestamp);
@@ -146,7 +236,7 @@ class Join extends Notification {
         this.grpName = grpName;
         this.text = " has joined your group";
         this.textSpan.innerText = this.text;
-        this.subjectSpan.innerText = ` ${this.groupName}`;
+        this.subjectSpan.innerText = ` ${this.grpName}`;
     }
     
 }
@@ -179,94 +269,86 @@ class Leave extends Notification {
     }
     
 }
+//END Notification Classes
 
+//Function used to control generation of dummy data
+function getDummyNotifications(){
+    const notifications = [];
+    notifications.push(new PostReaction(
+        users.find(u => u.id === 0),
+        getRandomDate(),
+        "My first tournament today!"
+    ));
+    notifications.push(new Follow(
+        users.find(u => u.id === 1),
+        getRandomDate(),
+    ));
+    notifications.push(new Join(
+        users.find(u => u.id === 2),
+        getRandomDate(),
+        "Chess Club"
+    ));
+    notifications.push(new PrivateMessage(
+        users.find(u => u.id === 3),
+        getRandomDate(),
+        "Hello, thanks for setting up the Chess Club. \
+    I've been a member for a few weeks now and I'm already having lots of fun and improving my game."
+    ));
+    notifications.push(new Comment(
+        users.find(u => u.id === 4),
+        getRandomDate(),
+        "image-chess.webp"
+    ));
+    notifications.push(new PostReaction(
+        users.find(u => u.id === 5),
+        getRandomDate(),
+        "5 end-game strategies to increase your win rate"
+    ));
+    notifications.push(new Leave(
+        users.find(u => u.id === 6),
+        getRandomDate(),
+        "Chess Club"
+    ));
+    notifications.sort((a,b) => b.timestamp - a.timestamp);
 
-const notifications = [];
-
-notifications.push(new PostReaction(
-    users.find(u => u.id === 0),
-    getRandomDate(),
-    "My first tournament today!"
-));
-notifications.push(new Follow(
-    users.find(u => u.id === 1),
-    getRandomDate(),
-));
-notifications.push(new Join(
-    users.find(u => u.id === 2),
-    getRandomDate(),
-    "Chess Club"
-));
-notifications.push(new PrivateMessage(
-    users.find(u => u.id === 3),
-    getRandomDate(),
-    "Hello, thanks for setting up the Chess Club. \
-I've been a member for a few weeks now and I'm already having lots of fun and improving my game."
-));
-notifications.push(new Comment(
-    users.find(u => u.id === 4),
-    getRandomDate(),
-    "image-chess.webp"
-));
-notifications.push(new PostReaction(
-    users.find(u => u.id === 5),
-    getRandomDate(),
-    "5 end-game strategies to increase your win rate"
-));
-notifications.push(new Leave(
-    users.find(u => u.id === 6),
-    getRandomDate(),
-    "Chess Club"
-));
-
-notifications.sort((a,b) => a.timestamp - b.timestamp);
-
-
-
-
-
-const epochToMinutes = (epoch) => {
-    const mins = Math.floor(epoch/60000);
-    return mins;
-}
-const epochToMonths = (epoch) => {
-    const mths = Math.floor(epoch/2629743000);
-    return mths;
-}
-const epochToHours = (epoch) => {
-    const hrs = Math.floor(epoch/3600000);
-    return hrs;
-}
-const epochToDays = (epoch) => {
-    const days = Math.floor(epoch/86400000);
-    return days;
-}
-const epochToWeeks = (epoch) => {
-    const wks = Math.floor(epoch/604800000);
-    return wks;
-}
-const epochToYears = (epoch) => {
-    const yrs = Math.floor(epoch/31556926000);
-    return yrs;
-}
-const convertFromEpoch = (epoch) => {
-    switch(true){
-        case epoch > 31556926000: 
-            return epochToYears(epoch)
-        case epoch > 2629743000: 
-            return epochToMonths(epoch)
-        case epoch > 604800000: 
-            return epochToWeeks(epoch)
-        case epoch > 86400000: 
-            return epochToDays(epoch)
-        case epoch > 3600000: 
-            return epochToHours(epoch)
-        default: 
-            return epochToMinutes(epoch)   
-    }
+    return notifications;
 }
 
+//function to update Unread msg counter
+function updateMsgCounter(){
+    unreadMsgCounter.innerText = Notification.unreadMsgsCounter;
+}
+
+//INITIALIZATION Routine
+
+//Set dynamic tag links
+const unreadMsgCounter = document.querySelector(".unread-msg-counter")
 const notificationsContainer = document.querySelector("#notificationContainer")
+const markAll = document.querySelector(".mark-as-read")
 
+//init notifications and populate HTML notification container
+const notifications = getDummyNotifications();
 notifications.forEach(n => notificationsContainer.appendChild(n.notificationContainer))
-notifications.forEach(n => console.log(n.id));
+
+//refresh unread messages counter
+updateMsgCounter();
+
+
+
+//add event listeners
+notifications.forEach( n => n.notificationContainer.addEventListener("click", function(){
+    n.notificationClicked();
+}))
+markAll.addEventListener("click", function(){
+    notifications.forEach(n => n.markAsRead())
+    unreadMsgCounter.innerText = Notification.unreadMsgsCounter;
+})
+//end event listeners
+
+//END INITIALIZATION
+
+
+
+
+
+
