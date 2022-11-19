@@ -265,6 +265,7 @@ class Comment extends Notification {
         this.msgDiv = document.createElement("img");
         this.msgDiv.classList.add("comment-img");
         this.msgDiv.setAttribute("src", `./assets/images/${img}`)
+        this.msgDiv.setAttribute("alt", img)
         
         this.rightContainer.appendChild(this.msgDiv)
     }
