@@ -30,5 +30,5 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Add solution URL here](https://github.com/T-Bax/notifications-page-main)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Add live site URL here](https://t-bax.github.io/notifications-page-main/)
 
