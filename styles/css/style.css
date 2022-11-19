@@ -31,18 +31,23 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 
+}
+
+
+header{
+    height: 100%;
 }
 
 body{
     box-sizing: border-box;
     margin: 0;
-    width: 375px;
+    min-width: 375px;
     background-color: var(--clr-neutral-white);
     padding: 1.5em 1em;
-
+    max-width: 570px;
     
+
 }
 
 .notification-header{
@@ -74,8 +79,12 @@ li{
     display: flex;
 }
 
+.mark-as-read{
+    color: var(--clr-neutral-grayish-blue)
+}
 .mark-as-read:hover{
     cursor: pointer;
+    color: var(--clr-primary-blue);
 }
 
 .notifications-container{
@@ -84,6 +93,7 @@ li{
     margin-top: 1.25em;
     display: flex;
     flex-direction: column;
+    align-items: top;
     gap: .5em;
 }
 .notification{
@@ -96,32 +106,43 @@ li{
 }
 .notification:hover{
     cursor: pointer;
+    background-color: var(--clr-neutral-light-grayish-blue-1);
 }
 .left-section{
-    width: 20%;
+    width: 65px;
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     
 }
 .right-section{
-    width: 80%;
+    width: 100%;
     padding-right: 1em;
+    display: flex;
+    justify-content: space-between;
 }
 img{
     width: 2.5em;
     height: 2.5em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
     
 }
 .user{
     font-weight: 700;
 }
+.user:hover{
+    color: var(--clr-primary-blue);
+}
 .text{
     color: var(--clr-neutral-dark-grayish-blue);
 }
 .subject{
-    color: var(--clr-neutral-dark-grayish-blue);
+    color: var(--clr-neutral-grayish-blue);
     font-weight: bold;
+}
+.subject:hover{
+    color: var(--clr-primary-blue);
 }
 .timestamp{
     color: var(--clr-neutral-grayish-blue);
@@ -137,3 +158,40 @@ img{
 .read{
     background-color: var(--clr-neutral-white);
 }
+.message-container{
+    border-style: solid;
+    border-width: thin;
+    border-color: var(--clr-neutral-light-grayish-blue-2);
+    border-radius: 4px;
+    padding: 1em;
+    color: var(--clr-neutral-dark-grayish-blue);
+    margin-bottom: 1em;
+    
+    
+}
+.message-container:hover{
+    background-color: var(--clr-neutral-light-grayish-blue-2);
+}
+.comment-img{
+    
+    margin-left: 1em;
+
+}
+.comment-img:hover{
+    cursor: pointer;
+    box-shadow: 0 0 0 1px var(--clr-primary-blue);  
+    border-radius: 4px;  
+    
+}
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 400px){
+    body{
+        margin: 3em;
+        border-radius: 4px;
+    }
+}
+    

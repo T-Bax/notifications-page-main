@@ -140,6 +140,7 @@ class Notification {
     subjectSpan;
     dotSpan;
     elapsedTimeSpan;
+    rightContainer;
 
 
     markAsRead(){
@@ -149,21 +150,11 @@ class Notification {
             this.notificationContainer.classList.toggle("read");
             Notification.unreadMsgsCounter--
             updateMsgCounter();
-
         }
-        
     };
-
     notificationClicked(){
-        if(this.read === false){
-            this.markAsRead();
-        }
-
+        this.markAsRead();
     };
-
-
-
-
     createHTML(){
         const container = document.createElement("div");
         const left = document.createElement("div");
@@ -176,6 +167,7 @@ class Notification {
         const img = document.createElement("img");
         const br = document.createElement("br");
         const time = document.createElement("span");
+        time.classList.add("timestamp");
         container.classList.add("notification");
         left.classList.add("left-section");
         right.classList.add("right-section");
@@ -183,6 +175,7 @@ class Notification {
         textSpan.classList.add("text");
         subjectSpan.classList.add("subject");
         dotSpan.classList.add("dot");
+        img.setAttribute("alt", "avatar")
         container.appendChild(left);
         container.appendChild(right);
         left.appendChild(img);
@@ -193,20 +186,18 @@ class Notification {
         p.appendChild(dotSpan);
         p.appendChild(br);
         p.appendChild(time);
-    
 
         container.setAttribute("id", "notification_" + this.id)
         img.setAttribute("src", "./assets/images/" + this.user.avatar)
         userSpan.innerText = `${this.user.firstName} ${this.user.lastName}`;
         dotSpan.innerText = " •";
         
-        
+        this.rightContainer = right;
         this.elapsedTimeSpan = time;
         this.textSpan = textSpan;
         this.notificationContainer = container;
         this.subjectSpan = subjectSpan;
         this.dotSpan = dotSpan;
-
 
     }
 }
@@ -246,7 +237,22 @@ class PrivateMessage extends Notification {
         this.msg = msg;
         this.text = " sent you a private message";
         this.textSpan.innerText = this.text;
+
+        this.msgDiv = document.createElement("div");
+        this.msgDiv.classList.add("message-container", "hidden");
+        this.msgDiv.innerText = msg;
+        this.rightContainer.appendChild(this.msgDiv)
+        this.rightContainer.classList.add("flex-column");
+        
     }
+    
+
+    notificationClicked(){
+        super.notificationClicked();
+        this.msgDiv.classList.toggle("hidden")
+    }
+
+   
     
 
 }
@@ -256,6 +262,11 @@ class Comment extends Notification {
         this.img = img;
         this.text = " commented on your picture";
         this.textSpan.innerText = this.text;
+        this.msgDiv = document.createElement("img");
+        this.msgDiv.classList.add("comment-img");
+        this.msgDiv.setAttribute("src", `./assets/images/${img}`)
+        
+        this.rightContainer.appendChild(this.msgDiv)
     }
     
 }
@@ -343,6 +354,7 @@ markAll.addEventListener("click", function(){
     notifications.forEach(n => n.markAsRead())
     unreadMsgCounter.innerText = Notification.unreadMsgsCounter;
 })
+
 //end event listeners
 
 //END INITIALIZATION
